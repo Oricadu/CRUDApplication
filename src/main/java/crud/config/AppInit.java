@@ -11,7 +11,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     }
 
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{AppConfig.class};
+        return new Class[]{WebConfig.class};
     }
 
     protected String[] getServletMappings() {

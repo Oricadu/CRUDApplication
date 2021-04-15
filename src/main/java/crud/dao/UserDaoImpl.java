@@ -9,10 +9,7 @@ import crud.model.User;
 
 import java.util.List;
 import java.util.function.Function;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +31,15 @@ public class UserDaoImpl implements UserDao {
 
     public User get(long id) {
         return entityManager.find(User.class, id);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        Query query = entityManager.createQuery("select user from User user where user.email = :email");
+        query.setParameter("email", username);
+        User user = (User) query.getSingleResult();
+        System.out.println("user " + user.getEmail());
+        return user;
     }
 
     public User remove(long id) {
