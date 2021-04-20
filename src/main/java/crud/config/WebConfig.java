@@ -5,11 +5,13 @@
 
 package crud.config;
 
+import crud.model.RoleConverter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -53,5 +55,11 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setCharacterEncoding("UTF-8");
         resolver.setContentType("text/html; charset=UTF-8");
         registry.viewResolver(resolver);
+
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new RoleConverter());
     }
 }

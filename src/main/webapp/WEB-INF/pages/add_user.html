@@ -40,7 +40,7 @@
     </style>
 </head>
 <body>
-    <form th:method="POST" th:action="@{/users}" th:object="${user}">
+    <form th:method="POST" th:action="@{/admin/users}" th:object="${user}">
         <label>
             name
             <input name="name" type="text" th:field="*{name}">
@@ -56,6 +56,24 @@
         <label>
             email
             <input name="email" type="email" th:field="*{email}">
+        </label>
+        <label>
+            roles
+            <ul>
+                <li th:each="role : ${allRoles}">
+                    <input type="checkbox" th:field="*{roles}"
+                           th:value="${role.getId()}"/>
+                    <label th:for="${#ids.prev('roles')}"
+                           th:text="${role.getName()}"></label>
+                </li>
+                <!--<li th:each="role, row : ${allRoles}">
+                    <label th:for="${row.index}"
+                            th:text="${role.getName()}">Test</label>
+                    <input type="checkbox"
+                           th:field="*{roles[__${row.index}__]}"
+                           th:value="${role}" />
+                </li>-->
+            </ul>
         </label>
         <input type="submit" value="add user">
 

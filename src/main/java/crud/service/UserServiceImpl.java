@@ -10,6 +10,7 @@ import crud.model.Role;
 import crud.model.User;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,7 +77,10 @@ public class UserServiceImpl implements UserService {
         } else {
             System.out.println(user.getEmail());
             System.out.println(user.getPassword());
-            System.out.println(user.getRoles().iterator());
+            Iterator iterator = mapToAuthorities(user.getRoles()).iterator();
+            while (iterator.hasNext()) {
+                System.out.println(iterator.next());
+            }
             return new org.springframework.security.core.userdetails.User(user.getEmail(),
                     user.getPassword(), mapToAuthorities(user.getRoles()));
         }

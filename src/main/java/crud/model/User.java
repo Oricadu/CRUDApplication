@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(
@@ -45,7 +46,7 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    private List<Role> roles;
 
     public User() {
     }
@@ -56,13 +57,15 @@ public class User implements UserDetails {
                 String lastName,
                 byte age,
                 String email,
-                String password) {
+                String password,
+                List<Role> roles) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -105,11 +108,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
@@ -150,5 +153,17 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
