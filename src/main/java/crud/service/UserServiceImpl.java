@@ -18,9 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -75,12 +73,6 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("user %s not found", s));
         } else {
-            System.out.println(user.getEmail());
-            System.out.println(user.getPassword());
-            Iterator iterator = mapToAuthorities(user.getRoles()).iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next());
-            }
             return new org.springframework.security.core.userdetails.User(user.getEmail(),
                     user.getPassword(), mapToAuthorities(user.getRoles()));
         }
@@ -89,7 +81,7 @@ public class UserServiceImpl implements UserService {
 
     private Collection<? extends GrantedAuthority> mapToAuthorities(Collection<Role> roles) {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
                 .collect(Collectors.toList());
     }
 }

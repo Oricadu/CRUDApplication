@@ -33,15 +33,11 @@ public class AdminController {
         return "users";
     }
 
-
-
-
-
-
     @GetMapping({"/{id}/edit_user"})
     public String edit(@PathVariable("id") long id, ModelMap model) {
         model.addAttribute("user", this.userService.get(id));
-        model.addAttribute("roles", roleService.getListRoles());
+        model.addAttribute("userRoles", roleService.getListRoles());
+        model.addAttribute("allRoles", roleService.getListRoles());
         return "edit_user";
     }
 
@@ -67,32 +63,6 @@ public class AdminController {
     }
 
 
-/*
-    @InitBinder
-    protected void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(Role.class, new RolePropertyEditor());
-    }*/
-
-    /*class RolePropertyEditor extends PropertyEditorSupport {
-
-        @Override
-        public void setAsText(String roleName) {
-            Role role = roleService.getByName(roleName); // Get part based on the id
-            System.out.println(role);
-            setValue(role);
-        }
-
-        *//**
-         * This is called when checking if an option is selected
-         * @return
-         *//*
-        @Override
-        public String getAsText() {
-            return ((Role)getValue()).getName(); // don't forget null checking
-        }
-    }
-
-*/
 
     @PostMapping({"/users"})
     public String saveUser(@ModelAttribute("user") User user,

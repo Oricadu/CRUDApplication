@@ -41,19 +41,23 @@
             margin-top: 10px;
         }
 
+        a.logout {
+            margin: 5px;
+        }
+
     </style>
 </head>
 <body>
-
+<a class="logout" th:href="@{/logout}">logout</a>
 <table>
-    <tr><th colspan="7"><h2>Users</h2></th></tr>
+    <tr><th colspan="8"><h2>Users</h2></th></tr>
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Last Name</th>
         <th>Age</th>
         <th>Email</th>
-        <th colspan="2"></th>
+        <th colspan="3"></th>
     </tr>
         <th:block th:each="user : ${users}">
             <tr>
@@ -64,7 +68,7 @@
                 <td th:text="${user.getEmail()}"></td>
                 <td>
                     <p th:each="role : ${user.getRoles()}"
-                       th:text="${role.getName()}"></p>
+                       th:text="${role.getRoleName()}"></p>
                 </td>
                 <td><a th:href="@{/admin/{id}/edit_user(id = ${user.getId()})}">update</a></td>
                 <td><a th:href="@{/admin/{id}/remove_user(id = ${user.getId()})}">delete</a></td>

@@ -1,7 +1,6 @@
 package crud.dao;
 
 import crud.model.Role;
-import crud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,9 +30,7 @@ public class RoleDaoImpl implements RoleDao{
     public Role getByName(String name) {
         Query query = entityManager.createQuery("select role from Role role where role.name = :name", Role.class);
         query.setParameter("name", name);
-        System.out.println(name);
         Role role = (Role) query.getSingleResult();
-        System.out.println("role " + role.getName());
         return role;
     }
 }

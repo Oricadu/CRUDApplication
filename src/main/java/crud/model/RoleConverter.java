@@ -9,19 +9,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RoleConverter implements Converter<String, Role> {
+
     @Autowired
-    RoleDao roleDao;
+    private RoleDao roleDao;
 
     @Override
     public Role convert(String id) {
-        System.out.println("converter " + roleDao + " id " + id);
         Role role = null;
-        long intId = Integer.parseInt(id);
-        System.out.println(intId);
         if (roleDao != null) {
-            role = roleDao.getById(intId);
+            role = roleDao.getById(Integer.parseInt(id));
         }
-        System.out.println("role " + role);
         return role;
     }
 }

@@ -35,8 +35,12 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getName() {
+    public String getRoleName() {
         return name;
+    }
+
+    public String getName() {
+        return name.replaceAll("ROLE_", "");
     }
 
     public void setName(String name) {

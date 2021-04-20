@@ -6,6 +6,7 @@
 package crud.config;
 
 import crud.model.RoleConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,6 +28,9 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
+
+    @Autowired
+    private RoleConverter converter;
 
     public WebConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
@@ -60,6 +64,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new RoleConverter());
+        registry.addConverter(converter);
     }
 }

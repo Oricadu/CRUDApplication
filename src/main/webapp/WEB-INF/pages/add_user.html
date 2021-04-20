@@ -26,7 +26,7 @@
             text-align: center;
         }
 
-        input {
+        input, select {
             border-radius: 10px;
             padding: 6px;
             text-align: center;
@@ -60,20 +60,20 @@
         <label>
             roles
             <ul>
-                <li th:each="role : ${allRoles}">
+                <!--<li th:each="role : ${allRoles}">
                     <input type="checkbox" th:field="*{roles}"
                            th:value="${role.getId()}"/>
                     <label th:for="${#ids.prev('roles')}"
                            th:text="${role.getName()}"></label>
-                </li>
-                <!--<li th:each="role, row : ${allRoles}">
-                    <label th:for="${row.index}"
-                            th:text="${role.getName()}">Test</label>
-                    <input type="checkbox"
-                           th:field="*{roles[__${row.index}__]}"
-                           th:value="${role}" />
                 </li>-->
+
             </ul>
+            <select th:field="*{roles}"
+                    multiple>
+                <option th:each="role : ${allRoles}"
+                        th:text="${role.getName()}"
+                        th:value="${role.getId()}"></option>
+            </select>
         </label>
         <input type="submit" value="add user">
 
