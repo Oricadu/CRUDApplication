@@ -57,6 +57,10 @@
         <input type="email" name="email" th:field="*{email}" th:value="${user.getEmail()}">
     </label>
     <label>
+        password
+        <input name="password" type="password" th:field="*{password}" th:value="${user.getPassword()}">
+    </label>
+    <label>
         role
         <select th:field="*{roles}" name="roles" multiple size="2" >
             <option th:each="role : ${allRoles}"

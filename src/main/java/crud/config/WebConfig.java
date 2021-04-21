@@ -28,7 +28,6 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
-
     @Autowired
     private RoleConverter converter;
 
