@@ -13,6 +13,8 @@ import javax.persistence.*;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -29,14 +31,19 @@ public class UserDaoImpl implements UserDao {
         entityManager.persist(user);
     }
 
-    public User get(long id) {
-        return entityManager.find(User.class, id);
+    public User get(@Param("userId") long id) {
+//        return entityManager.find(User.class, id);
+
+        javax.persistence.Query query = entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.roles r WHERE u.id = :userId", User.class);
+        query.setParameter("userId", id);
+        User user = (User) query.getSingleResult();
+        return user;
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        Query query = entityManager.createQuery("select user from User user where user.email = :email", User.class);
-        query.setParameter("email", username);
+    public User getUserByUsername(@Param("username") String username) {
+        javax.persistence.Query query = entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.roles r WHERE u.email = :username", User.class);
+        query.setParameter("username", username);
         User user = (User) query.getSingleResult();
         return user;
     }
@@ -52,8 +59,9 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+//    @Query("SELECT u FROM User u JOIN FETCH u.roles r")
     public List<User> getUsers() {
-        return entityManager.createQuery("select user from User user").getResultList();
+        return entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.roles r").getResultList();
 
     }
 

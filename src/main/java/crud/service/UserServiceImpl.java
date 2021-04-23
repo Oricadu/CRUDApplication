@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,31 +34,31 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void add(User user) {
-        this.userDao.add(user);
+        userDao.add(user);
     }
 
     @Override
     @Transactional
     public User get(long id) {
-        return this.userDao.get(id);
+        return userDao.get(id);
     }
 
     @Override
     @Transactional
     public User remove(long id) {
-        return this.userDao.remove(id);
+        return userDao.remove(id);
     }
 
     @Override
     @Transactional
     public User update(long id, User user) {
-        return this.userDao.update(id, user);
+        return userDao.update(id, user);
     }
 
     @Override
     @Transactional
     public List<User> getUsers() {
-        return this.userDao.getUsers();
+        return userDao.getUsers();
     }
 
     @Override
@@ -66,22 +67,4 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserByUsername(username);
     }
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = getUserByUsername(s);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("user %s not found", s));
-        } else {
-            return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                    user.getPassword(), mapToAuthorities(user.getRoles()));
-        }
-
-    }
-
-    private Collection<? extends GrantedAuthority> mapToAuthorities(Collection<Role> roles) {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
-                .collect(Collectors.toList());
-    }
 }

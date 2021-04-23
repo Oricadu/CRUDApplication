@@ -1,7 +1,8 @@
-package crud.model;
+package crud.converter;
 
 import crud.dao.RoleDao;
 import crud.dao.RoleDaoImpl;
+import crud.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;

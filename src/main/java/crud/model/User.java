@@ -13,36 +13,28 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(
-        name = "users"
-)
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(
-            name = "name"
-    )
+
+    @Column(name = "name")
     private String name;
-    @Column(
-            name = "lastName"
-    )
+
+    @Column(name = "last_name")
     private String lastName;
-    @Column(
-            name = "age"
-    )
+
+    @Column(name = "age")
     private byte age;
-    @Column(
-            name = "email"
-    )
+
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

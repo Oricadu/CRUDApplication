@@ -45,6 +45,8 @@ public class DBConfig {
         Properties props = new Properties();
         props.put("hibernate.show_sql", this.env.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", this.env.getProperty("hibernate.hbm2ddl.auto"));
+
+//        props.put("hibernate.enable_lazy_load_no_trans","true");
         em.setJpaProperties(props);
         return em;
     }

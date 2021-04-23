@@ -29,27 +29,28 @@ public class AdminController {
 
     @GetMapping({"/"})
     public String printUsers(ModelMap model) {
-        model.addAttribute("users", this.userService.getUsers());
+        model.addAttribute("users", userService.getUsers());
         return "users";
     }
 
     @GetMapping({"/{id}/edit_user"})
     public String edit(@PathVariable("id") long id, ModelMap model) {
-        model.addAttribute("user", this.userService.get(id));
-        model.addAttribute("userRoles", roleService.getListRoles());
+        User user = userService.get(id);
+        model.addAttribute("user", user);
+        model.addAttribute("userRoles", user.getRoles());
         model.addAttribute("allRoles", roleService.getListRoles());
         return "edit_user";
     }
 
     @PostMapping({"/users/{id}"})
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id, ModelMap model) {
-        model.addAttribute("updatedUser", this.userService.update(id, user));
+        model.addAttribute("updatedUser", userService.update(id, user));
         return "redirect:/admin/";
     }
 
     @GetMapping({"/{id}/remove_user"})
     public String removeUser(@PathVariable("id") long id, ModelMap model) {
-        model.addAttribute("user", this.userService.remove(id));
+        model.addAttribute("user", userService.remove(id));
         model.addAttribute("text", "removed");
         return "show_user";
     }
@@ -68,23 +69,20 @@ public class AdminController {
     public String saveUser(@ModelAttribute("user") User user,
                            @RequestParam("roles") List<Role> roles,
                            ModelMap model) {
-        System.out.println(user);
-        System.out.println(roles);
-        this.userService.add(user);
-        System.out.println(user.getName());
+        userService.add(user);
         return "redirect:/admin/";
     }
 
     @GetMapping({"/{id}"})
     public String show(@PathVariable("id") long id, ModelMap model) {
-        model.addAttribute(this.userService.get(id));
+        model.addAttribute(userService.get(id));
         return "show_user";
     }
 
 
     @GetMapping({"/get_by_email"})
     public String getByEmail(ModelMap model) {
-        model.addAttribute(this.userService.getUserByUsername("email@mail.ru"));
+        model.addAttribute(userService.getUserByUsername("email@mail.ru"));
         return "show_user";
     }
 }
